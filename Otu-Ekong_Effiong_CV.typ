@@ -48,7 +48,8 @@
   #v(2pt)
   #text(size: 10pt)[
     +974 512 80 151 |
-    #link("mailto:Otujoseph327@yahoo.com")[Otujoseph327\@yahoo.com] |
+    #link("mailto:Otujoseph345@outlook.com")[Otujoseph345\@outlook.com] |
+    https://otu-ekongeffiong.github.io/Portfolio/ |
     Qatar, Doha, Al Wukair
   ]
 ]
