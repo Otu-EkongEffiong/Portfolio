@@ -1,928 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Otu-Ekong Effiong — UI/UX Designer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Bricolage+Grotesque:wght@300;400;500;700&display=swap" rel="stylesheet"/>
-<style>
-  :root {
-    --bg: #0c0c0f;
-    --surface: #141418;
-    --border: #222228;
-    --text: #e8e6df;
-    --muted: #7a7870;
-    --accent: #c8b07a;
-    --accent2: #7ab3c8;
-    --glow: rgba(200,176,122,0.12);
-  }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Otu-Ekong Effiong — UI/UX Designer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Bricolage+Grotesque:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <!-- NAV -->
+    <nav id="navbar">
+      <a class="nav-logo" href="#">OE — Portfolio</a>
+      <ul class="nav-links">
+        <li><a href="#projects">Work</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li>
+          <a
+            href="./Otu-Ekong_Effiong_CV.pdf"
+            download="./Otu-Ekong_Effiong_CV.pdf"
+            >CV</a
+          >
+        </li>
+      </ul>
+    </nav>
 
-  html { scroll-behavior: smooth; }
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-bg-lines"></div>
+      <div class="hero-glow"></div>
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-    cursor: none;
-  }
-
-  /* ── Custom cursor ── */
-  .cursor {
-    width: 10px; height: 10px;
-    background: var(--accent);
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.15s ease, opacity 0.15s ease;
-    transform: translate(-50%,-50%);
-  }
-  .cursor-ring {
-    width: 36px; height: 36px;
-    border: 1px solid var(--accent);
-    border-radius: 50%;
-    position: fixed; top: 0; left: 0;
-    pointer-events: none;
-    z-index: 9998;
-    transition: transform 0.4s cubic-bezier(.25,.46,.45,.94), opacity 0.2s;
-    transform: translate(-50%,-50%);
-    opacity: 0.5;
-  }
-
-  /* ── Noise overlay ── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 0; opacity: 0.35;
-  }
-
-  /* ── Nav ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.5rem 4rem;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.3s, background 0.3s;
-  }
-  nav.scrolled {
-    border-color: var(--border);
-    background: rgba(12,12,15,0.85);
-    backdrop-filter: blur(16px);
-  }
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.08em;
-    color: var(--accent);
-    text-decoration: none;
-    font-style: italic;
-  }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  .nav-links a {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--accent); }
-
-  /* ── Hero ── */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 8rem 4rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-bg-lines {
-    position: absolute; inset: 0; pointer-events: none;
-    background-image:
-      linear-gradient(90deg, var(--border) 1px, transparent 1px),
-      linear-gradient(0deg, var(--border) 1px, transparent 1px);
-    background-size: 80px 80px;
-    opacity: 0.3;
-  }
-  .hero-glow {
-    position: absolute;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(200,176,122,0.08) 0%, transparent 70%);
-    top: 50%; left: 40%;
-    transform: translate(-50%,-50%);
-    pointer-events: none;
-  }
-  .hero-left { position: relative; z-index: 1; }
-  .hero-tag {
-    display: inline-flex; align-items: center; gap: 0.6rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
-  .hero-tag::before {
-    content: '';
-    display: block; width: 24px; height: 1px;
-    background: var(--accent);
-  }
-  .hero-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3.5rem, 8vw, 7rem);
-    font-weight: 300;
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.4s forwards;
-  }
-  .hero-name em {
-    font-style: italic;
-    color: var(--accent);
-  }
-  .hero-desc {
-    font-size: 1rem;
-    color: var(--muted);
-    line-height: 1.7;
-    max-width: 420px;
-    margin-bottom: 3rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.6s forwards;
-  }
-  .hero-cta {
-    display: flex; gap: 1rem; flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.8s forwards;
-  }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.9rem 2rem;
-    background: var(--accent);
-    color: var(--bg);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: none;
-    cursor: none;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(200,176,122,0.3);
-  }
-  .btn-outline {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.9rem 2rem;
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    text-decoration: none;
-    cursor: none;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-  .hero-right {
-    display: flex; justify-content: flex-end; align-items: center;
-    position: relative; z-index: 1;
-    opacity: 0;
-    animation: fadeIn 1s 1s forwards;
-  }
-  .hero-card {
-    border: 1px solid var(--border);
-    background: var(--surface);
-    padding: 2.5rem;
-    max-width: 320px;
-    position: relative;
-  }
-  .hero-card::before {
-    content: '';
-    position: absolute; top: -1px; left: 2rem; width: 60px; height: 2px;
-    background: var(--accent);
-  }
-  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  .stat { }
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.5rem;
-    font-weight: 300;
-    color: var(--accent);
-    line-height: 1;
-  }
-  .stat-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 0.3rem;
-  }
-  .hero-card-divider {
-    height: 1px; background: var(--border); margin: 2rem 0;
-  }
-  .availability {
-    display: flex; align-items: center; gap: 0.75rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-  }
-  .avail-dot {
-    width: 8px; height: 8px;
-    background: #4caf7d;
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(0.85); }
-  }
-  .scroll-hint {
-    position: absolute; bottom: 2.5rem; left: 50%;
-    transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    opacity: 0;
-    animation: fadeIn 1s 1.5s forwards;
-  }
-  .scroll-line {
-    width: 1px; height: 48px;
-    background: linear-gradient(to bottom, var(--accent), transparent);
-    animation: scrollLine 2s 2s infinite;
-  }
-  @keyframes scrollLine {
-    0% { transform: scaleY(0); transform-origin: top; }
-    50% { transform: scaleY(1); transform-origin: top; }
-    51% { transform-origin: bottom; }
-    100% { transform: scaleY(0); transform-origin: bottom; }
-  }
-
-  /* ── Section layout ── */
-  section { padding: 7rem 4rem; position: relative; }
-  .section-label {
-    display: flex; align-items: center; gap: 1rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 3.5rem;
-  }
-  .section-label::after {
-    content: '';
-    flex: 1; height: 1px; background: var(--border);
-    max-width: 80px;
-  }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 300;
-    line-height: 1.1;
-    margin-bottom: 1rem;
-  }
-  .section-title em { font-style: italic; color: var(--accent); }
-
-  /* ── Projects ── */
-  #projects { border-top: 1px solid var(--border); }
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-  .project-card {
-    border: 1px solid var(--border);
-    background: var(--surface);
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s;
-    cursor: none;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-  .project-card::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 1px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s ease;
-  }
-  .project-card:hover { border-color: rgba(200,176,122,0.3); transform: translateY(-4px); }
-  .project-card:hover::before { transform: scaleX(1); }
-  .project-year {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-  }
-  .project-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.6rem;
-    font-weight: 400;
-    margin-bottom: 0.75rem;
-    line-height: 1.2;
-  }
-  .project-desc {
-    font-size: 0.85rem;
-    color: var(--muted);
-    line-height: 1.65;
-    margin-bottom: 1.5rem;
-  }
-  .project-tags {
-    display: flex; flex-wrap: wrap; gap: 0.5rem;
-  }
-  .tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.25rem 0.6rem;
-    border: 1px solid var(--border);
-    color: var(--muted);
-  }
-  .project-arrow {
-    position: absolute; bottom: 1.5rem; right: 1.5rem;
-    font-size: 1.2rem;
-    color: var(--accent);
-    opacity: 0;
-    transition: opacity 0.3s, transform 0.3s;
-  }
-  .project-card:hover .project-arrow { opacity: 1; transform: translate(4px,-4px); }
-
-  /* ── Skills ── */
-  #skills { border-top: 1px solid var(--border); background: var(--surface); }
-  .skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-  .skill-group { margin-bottom: 2.5rem; }
-  .skill-group-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1rem;
-  }
-  .skill-list { list-style: none; }
-  .skill-list li {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.9rem;
-    color: var(--muted);
-    transition: color 0.2s;
-  }
-  .skill-list li:hover { color: var(--text); }
-  .skill-list li::before {
-    content: '—';
-    color: var(--border);
-    margin-right: 0.75rem;
-    flex-shrink: 0;
-  }
-  .tools-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    margin-top: 0.5rem;
-  }
-  .tool-cell {
-    background: var(--surface);
-    padding: 1rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    color: var(--muted);
-    transition: background 0.2s, color 0.2s;
-    text-align: center;
-  }
-  .tool-cell:hover { background: var(--bg); color: var(--accent); }
-
-  /* ── Experience / Education ── */
-  #education { border-top: 1px solid var(--border); }
-  .timeline { position: relative; padding-left: 2rem; }
-  .timeline::before {
-    content: '';
-    position: absolute; left: 0; top: 0; bottom: 0;
-    width: 1px; background: var(--border);
-  }
-  .timeline-item {
-    position: relative;
-    padding-bottom: 3rem;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s, transform 0.6s;
-  }
-  .timeline-item.visible { opacity: 1; transform: translateY(0); }
-  .timeline-item::before {
-    content: '';
-    position: absolute; left: -2rem; top: 0.4rem;
-    width: 8px; height: 8px;
-    background: var(--accent);
-    border-radius: 50%;
-    transform: translateX(-3.5px);
-  }
-  .timeline-dates {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 0.5rem;
-  }
-  .timeline-org {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem;
-    font-weight: 400;
-    margin-bottom: 0.25rem;
-  }
-  .timeline-role {
-    font-size: 0.85rem;
-    color: var(--muted);
-    font-style: italic;
-    margin-bottom: 0.75rem;
-  }
-  .timeline-detail {
-    font-size: 0.85rem;
-    color: var(--muted);
-    line-height: 1.7;
-  }
-
-  /* ── Certifications ── */
-  #certifications { border-top: 1px solid var(--border); background: var(--surface); }
-  .cert-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
-  .cert-card {
-    border: 1px solid var(--border);
-    background: var(--bg);
-    padding: 1.8rem;
-    position: relative;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    transition: border-color 0.3s;
-  }
-  .cert-card:hover { border-color: rgba(200,176,122,0.4); }
-  .cert-issuer {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.75rem;
-  }
-  .cert-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-  }
-  .cert-date {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--muted);
-  }
-  .cert-verify {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.62rem;
-    color: var(--accent2);
-    margin-top: 1rem;
-    letter-spacing: 0.08em;
-  }
-
-  /* ── Contact ── */
-  #contact { border-top: 1px solid var(--border); }
-  .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-  .contact-big {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3rem, 6vw, 5.5rem);
-    font-weight: 300;
-    line-height: 1;
-    margin-bottom: 2rem;
-  }
-  .contact-big em { font-style: italic; color: var(--accent); }
-  .contact-items { display: flex; flex-direction: column; gap: 1.5rem; }
-  .contact-item {
-    display: flex; align-items: flex-start; gap: 1rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .contact-item-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--muted);
-    width: 80px;
-    flex-shrink: 0;
-    padding-top: 0.15rem;
-  }
-  .contact-item-value {
-    font-size: 0.95rem;
-    color: var(--text);
-    text-decoration: none;
-    transition: color 0.2s;
-    word-break: break-all;
-  }
-  .contact-item-value:hover { color: var(--accent); }
-
-  /* ── Footer ── */
-  footer {
-    padding: 2rem 4rem;
-    border-top: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .footer-copy {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-  }
-  .footer-back {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .footer-back:hover { color: var(--accent); }
-
-  /* ── Animations ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  /* ── Observe reveal ── */
-  .reveal {
-    opacity: 0; transform: translateY(24px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-  .reveal-delay-1 { transition-delay: 0.1s; }
-  .reveal-delay-2 { transition-delay: 0.2s; }
-  .reveal-delay-3 { transition-delay: 0.3s; }
-
-  /* ── Responsive ── */
-  @media (max-width: 900px) {
-    nav { padding: 1.5rem 2rem; }
-    .hero { grid-template-columns: 1fr; padding: 7rem 2rem 4rem; }
-    .hero-right { justify-content: center; margin-top: 3rem; }
-    section { padding: 5rem 2rem; }
-    .projects-grid { grid-template-columns: 1fr; }
-    .skills-layout { grid-template-columns: 1fr; gap: 3rem; }
-    .cert-grid { grid-template-columns: 1fr; }
-    .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
-    footer { flex-direction: column; gap: 1rem; padding: 2rem; }
-    .scroll-hint { display: none; }
-  }
-</style>
-</head>
-<body>
-
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<!-- NAV -->
-<nav id="navbar">
-  <a class="nav-logo" href="#">OE — Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="#projects">Work</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-bg-lines"></div>
-  <div class="hero-glow"></div>
-
-  <div class="hero-left">
-    <div class="hero-tag">UI/UX Designer — Open to Internship</div>
-    <h1 class="hero-name">
-      Otu-Ekong<br/>
-      <em>Effiong</em>
-    </h1>
-    <p class="hero-desc">
-      I design thoughtful digital experiences — from research and wireframes to polished interfaces — grounded in user psychology and systematic design thinking.
-    </p>
-    <div class="hero-cta">
-      <a class="btn-primary" href="#projects">View Work →</a>
-      <a class="btn-outline" href="mailto:Otujoseph327@yahoo.com">Get in Touch</a>
-    </div>
-  </div>
-
-  <div class="hero-right">
-    <div class="hero-card">
-      <div class="stat-grid">
-        <div class="stat">
-          <div class="stat-num">3+</div>
-          <div class="stat-label">Projects</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">2+</div>
-          <div class="stat-label">Certifications</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">2024</div>
-          <div class="stat-label">Latest Work</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">QA</div>
-          <div class="stat-label">Based in</div>
+      <div class="hero-left">
+        <div class="hero-tag">UI/UX Designer — Open to Internship</div>
+        <h1 class="hero-name">
+          Otu-Ekong<br />
+          <em>Effiong</em>
+        </h1>
+        <p class="hero-desc">
+          I design thoughtful digital experiences — from research and wireframes
+          to polished interfaces — grounded in user psychology and systematic
+          design thinking.
+        </p>
+        <div class="hero-cta">
+          <a class="btn-primary" href="#projects">View Work →</a>
+          <a class="btn-outline" href="mailto:Otujoseph327@yahoo.com"
+            >Get in Touch</a
+          >
         </div>
       </div>
-      <div class="hero-card-divider"></div>
-      <div class="availability">
-        <div class="avail-dot"></div>
-        Available for internships
-      </div>
-    </div>
-  </div>
 
-  <div class="scroll-hint">
-    <div class="scroll-line"></div>
-    Scroll
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-label">Selected Work</div>
-  <h2 class="section-title reveal">Projects that <em>define</em><br/>the process</h2>
-
-  <div class="projects-grid">
-
-    <a class="project-card reveal reveal-delay-1"
-       href="https://www.figma.com/design/YEeFskjYcXjFBxOsMeCUZ2/watch43?node-id=202-418&t=NEOutqRcc9snFGfj-1"
-       target="_blank" rel="noopener">
-      <div class="project-year">2024 — Coursework</div>
-      <div class="project-title">Video Streaming App</div>
-      <p class="project-desc">
-        End-to-end UX research and wireframe prototype for a streaming platform — responsive grids, dynamic sliders, card-based navigation, and interactive video players.
-      </p>
-      <div class="project-tags">
-        <span class="tag">Figma</span>
-        <span class="tag">UX Research</span>
-        <span class="tag">Wireframing</span>
-      </div>
-      <div class="project-arrow">↗</div>
-    </a>
-
-    <a class="project-card reveal reveal-delay-2"
-       href="https://www.figma.com/design/wWEPLFCw3OjJiZHGGD7lNZ/Horror-wiki?node-id=39-2&t=W8E9rQiwNxO65Flo-1"
-       target="_blank" rel="noopener">
-      <div class="project-year">2024 — Coursework</div>
-      <div class="project-title">Horror Wiki Design System</div>
-      <p class="project-desc">
-        Full-scale design system — typography, colour palettes, component libraries, hover/press states, media streaming prototype with video player interfaces.
-      </p>
-      <div class="project-tags">
-        <span class="tag">Figma</span>
-        <span class="tag">Component Libraries</span>
-        <span class="tag">Prototyping</span>
-      </div>
-      <div class="project-arrow">↗</div>
-    </a>
-
-    <a class="project-card reveal reveal-delay-3"
-       href="https://www.figma.com/design/n1QIyyUKpPo0VRdzhaEFj6/Design-System?node-id=3-265&t=Fkdrt0IZtxmtyxoB-1"
-       target="_blank" rel="noopener">
-      <div class="project-year">2023 — Coursework</div>
-      <div class="project-title">Graphical HCI Coursework</div>
-      <p class="project-desc">
-        Foundational design exploration covering typography, colour theory, cross-platform mock-ups, and visual communication principles across breakpoints.
-      </p>
-      <div class="project-tags">
-        <span class="tag">Typography</span>
-        <span class="tag">Colour Theory</span>
-        <span class="tag">Cross-platform</span>
-      </div>
-      <div class="project-arrow">↗</div>
-    </a>
-
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="section-label">Capabilities</div>
-  <div class="skills-layout">
-    <div>
-      <h2 class="section-title reveal">The full<br/><em>toolkit</em></h2>
-
-      <div class="skill-group reveal">
-        <div class="skill-group-label">Design</div>
-        <ul class="skill-list">
-          <li>Design Thinking Lifecycle</li>
-          <li>User Experience Design</li>
-          <li>User Research Analysis</li>
-          <li>Software Development Lifecycle</li>
-        </ul>
+      <div class="hero-right">
+        <div class="hero-card">
+          <div class="stat-grid">
+            <div class="stat">
+              <div class="stat-num">3+</div>
+              <div class="stat-label">Projects</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">2+</div>
+              <div class="stat-label">Certifications</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">2024</div>
+              <div class="stat-label">Latest Work</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">QA</div>
+              <div class="stat-label">Based in</div>
+            </div>
+          </div>
+          <div class="hero-card-divider"></div>
+          <div class="availability">
+            <div class="avail-dot"></div>
+            Available for internships
+          </div>
+        </div>
       </div>
 
-      <div class="skill-group reveal">
-        <div class="skill-group-label">Testing & Evaluation</div>
-        <ul class="skill-list">
-          <li>A/B Testing</li>
-          <li>Tree Testing</li>
-          <li>Heuristic Evaluation</li>
-          <li>Cognitive Walkthrough</li>
-        </ul>
+      <div class="scroll-hint">
+        <div class="scroll-line"></div>
+        Scroll
       </div>
+    </section>
 
-      <div class="skill-group reveal">
-        <div class="skill-group-label">Mapping Methods</div>
-        <ul class="skill-list">
-          <li>User Persona Development</li>
-          <li>Stakeholder Mapping</li>
-          <li>Customer Journey Mapping</li>
-          <li>Empathy Mapping</li>
-          <li>Context Mapping</li>
-        </ul>
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="section-label">Selected Work</div>
+      <h2 class="section-title reveal">
+        Projects that <em>define</em><br />the process
+      </h2>
+
+      <div class="projects-grid">
+        <a
+          class="project-card reveal reveal-delay-1"
+          href="https://www.figma.com/design/YEeFskjYcXjFBxOsMeCUZ2/watch43?node-id=202-418&t=NEOutqRcc9snFGfj-1"
+          target="_blank"
+          rel="noopener"
+        >
+          <div class="project-year">2024 — Coursework</div>
+          <div class="project-title">Video Streaming App</div>
+          <p class="project-desc">
+            End-to-end UX research and wireframe prototype for a streaming
+            platform — responsive grids, dynamic sliders, card-based navigation,
+            and interactive video players.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Figma</span>
+            <span class="tag">UX Research</span>
+            <span class="tag">Wireframing</span>
+          </div>
+          <div class="project-arrow">↗</div>
+        </a>
+
+        <a
+          class="project-card reveal reveal-delay-2"
+          href="https://www.figma.com/design/wWEPLFCw3OjJiZHGGD7lNZ/Horror-wiki?node-id=39-2&t=W8E9rQiwNxO65Flo-1"
+          target="_blank"
+          rel="noopener"
+        >
+          <div class="project-year">2024 — Coursework</div>
+          <div class="project-title">Horror Wiki Design System</div>
+          <p class="project-desc">
+            Full-scale design system — typography, colour palettes, component
+            libraries, hover/press states, media streaming prototype with video
+            player interfaces.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Figma</span>
+            <span class="tag">Component Libraries</span>
+            <span class="tag">Prototyping</span>
+          </div>
+          <div class="project-arrow">↗</div>
+        </a>
+
+        <a
+          class="project-card reveal reveal-delay-3"
+          href="https://www.figma.com/design/n1QIyyUKpPo0VRdzhaEFj6/Design-System?node-id=3-265&t=Fkdrt0IZtxmtyxoB-1"
+          target="_blank"
+          rel="noopener"
+        >
+          <div class="project-year">2023 — Coursework</div>
+          <div class="project-title">Graphical HCI Coursework</div>
+          <p class="project-desc">
+            Foundational design exploration covering typography, colour theory,
+            cross-platform mock-ups, and visual communication principles across
+            breakpoints.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Typography</span>
+            <span class="tag">Colour Theory</span>
+            <span class="tag">Cross-platform</span>
+          </div>
+          <div class="project-arrow">↗</div>
+        </a>
       </div>
-    </div>
+    </section>
 
-    <div>
-      <div class="section-label reveal">Tools</div>
-      <div class="tools-grid reveal">
-        <div class="tool-cell">Figma</div>
-        <div class="tool-cell">FigJam</div>
-        <div class="tool-cell">Affinity</div>
-        <div class="tool-cell">Blender</div>
-        <div class="tool-cell">Miro</div>
-        <div class="tool-cell">Lucid Spark</div>
-        <div class="tool-cell">Jira</div>
-        <div class="tool-cell">ClickUp</div>
-        <div class="tool-cell">GitHub</div>
+    <!-- SKILLS -->
+    <section id="skills">
+      <div class="section-label">Capabilities</div>
+      <div class="skills-layout">
+        <div>
+          <h2 class="section-title reveal">The full<br /><em>toolkit</em></h2>
+
+          <div class="skill-group reveal">
+            <div class="skill-group-label">Design</div>
+            <ul class="skill-list">
+              <li>Design Thinking Lifecycle</li>
+              <li>User Experience Design</li>
+              <li>User Research Analysis</li>
+              <li>Software Development Lifecycle</li>
+            </ul>
+          </div>
+
+          <div class="skill-group reveal">
+            <div class="skill-group-label">Testing & Evaluation</div>
+            <ul class="skill-list">
+              <li>A/B Testing</li>
+              <li>Tree Testing</li>
+              <li>Heuristic Evaluation</li>
+              <li>Cognitive Walkthrough</li>
+            </ul>
+          </div>
+
+          <div class="skill-group reveal">
+            <div class="skill-group-label">Mapping Methods</div>
+            <ul class="skill-list">
+              <li>User Persona Development</li>
+              <li>Stakeholder Mapping</li>
+              <li>Customer Journey Mapping</li>
+              <li>Empathy Mapping</li>
+              <li>Context Mapping</li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-label reveal">Tools</div>
+          <div class="tools-grid reveal">
+            <div class="tool-cell">Figma</div>
+            <div class="tool-cell">FigJam</div>
+            <div class="tool-cell">Affinity</div>
+            <div class="tool-cell">Blender</div>
+            <div class="tool-cell">Miro</div>
+            <div class="tool-cell">Lucid Spark</div>
+            <div class="tool-cell">Jira</div>
+            <div class="tool-cell">ClickUp</div>
+            <div class="tool-cell">GitHub</div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- EDUCATION -->
-<section id="education">
-  <div class="section-label">Background</div>
-  <h2 class="section-title reveal">Education &amp;<br/><em>Credentials</em></h2>
+    <!-- EDUCATION -->
+    <section id="education">
+      <div class="section-label">Background</div>
+      <h2 class="section-title reveal">
+        Education &amp;<br /><em>Credentials</em>
+      </h2>
 
-  <div class="timeline" style="margin-top:3rem;">
-    <div class="timeline-item">
-      <div class="timeline-dates">Expected Sep. 2026</div>
-      <div class="timeline-org">University of Economics and Human Sciences</div>
-      <div class="timeline-role">BSc Computer Science — Warsaw, Poland</div>
-      <p class="timeline-detail">
-        Coursework in digital product design, software engineering, and UI development. Hands-on experience with responsive animated websites, wireframes across desktop, tablet, and mobile breakpoints. Studied visual hierarchy, golden ratio, and cross-platform fundamentals. Applied UX methods: user personas, stakeholder maps, empathy maps, and customer journey maps.
-      </p>
-    </div>
+      <div class="timeline" style="margin-top: 3rem">
+        <div class="timeline-item">
+          <div class="timeline-dates">Expected Sep. 2026</div>
+          <div class="timeline-org">
+            University of Economics and Human Sciences
+          </div>
+          <div class="timeline-role">BSc Computer Science — Warsaw, Poland</div>
+          <p class="timeline-detail">
+            Coursework in digital product design, software engineering, and UI
+            development. Hands-on experience with responsive animated websites,
+            wireframes across desktop, tablet, and mobile breakpoints. Studied
+            visual hierarchy, golden ratio, and cross-platform fundamentals.
+            Applied UX methods: user personas, stakeholder maps, empathy maps,
+            and customer journey maps.
+          </p>
+        </div>
 
-    <div class="timeline-item">
-      <div class="timeline-dates">Sep. 2013 – Jun. 2021</div>
-      <div class="timeline-org">Mesaieed International School</div>
-      <div class="timeline-role">High School Diploma — British Curriculum (Edexcel &amp; Cambridge) · Mesaieed, Qatar</div>
-      <p class="timeline-detail">
-        A Level grade B in Information Technology (Cambridge International, 2021). IGCSE subjects including Computer Science, Mathematics, Art &amp; Design: Fine Art, and Design &amp; Technology.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- CERTIFICATIONS -->
-<section id="certifications">
-  <div class="section-label">Certifications</div>
-  <h2 class="section-title reveal">Verified<br/><em>credentials</em></h2>
-  <div class="cert-grid">
-    <a class="cert-card reveal reveal-delay-1"
-       href="https://navoica.pl/certificates/7b9cb19e87b64588a7005c262738ada1"
-       target="_blank" rel="noopener">
-      <div class="cert-issuer">NAVOICA / Vizja University</div>
-      <div class="cert-name">Website Development</div>
-      <div class="cert-date">Jan. 2026</div>
-      <div class="cert-verify">↗ Verify certificate</div>
-    </a>
-    <a class="cert-card reveal reveal-delay-2"
-       href="https://navoica.pl/certificates/1e96020da4a54d798e74edb3d6229809"
-       target="_blank" rel="noopener">
-      <div class="cert-issuer">NAVOICA / Vizja University</div>
-      <div class="cert-name">Academic Skills</div>
-      <div class="cert-date">Jan. 2026</div>
-      <div class="cert-verify">↗ Verify certificate</div>
-    </a>
-    <a class="cert-card reveal reveal-delay-3"
-       href="https://drive.google.com/file/d/10Gtjleph2bSB00pUJ9YqJuNJ_D1sY4UL/view?usp=sharing"
-       target="_blank" rel="noopener">
-      <div class="cert-issuer">British Council — IELTS Academic</div>
-      <div class="cert-name">English Proficiency<br/>Band 6.0 (CEFR B2)</div>
-      <div class="cert-date">Aug. 2020 · Doha, Qatar</div>
-      <div class="cert-verify">↗ View certificate</div>
-    </a>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-layout">
-    <div>
-      <div class="section-label">Get In Touch</div>
-      <h2 class="contact-big reveal">Let's build<br/>something<br/><em>great</em></h2>
-      <p class="reveal" style="color:var(--muted);font-size:0.9rem;line-height:1.7;max-width:380px;">
-        I'm actively seeking UI/UX internship opportunities. If you're looking for a detail-oriented designer who can research, wireframe, prototype, and iterate — let's connect.
-      </p>
-    </div>
-    <div class="contact-items reveal">
-      <div class="contact-item">
-        <span class="contact-item-label">Email</span>
-        <a class="contact-item-value" href="mailto:Otujoseph327@yahoo.com">Otujoseph327@yahoo.com</a>
+        <div class="timeline-item">
+          <div class="timeline-dates">Sep. 2013 – Jun. 2021</div>
+          <div class="timeline-org">Mesaieed International School</div>
+          <div class="timeline-role">
+            High School Diploma — British Curriculum (Edexcel &amp; Cambridge) ·
+            Mesaieed, Qatar
+          </div>
+          <p class="timeline-detail">
+            A Level grade B in Information Technology (Cambridge International,
+            2021). IGCSE subjects including Computer Science, Mathematics, Art
+            &amp; Design: Fine Art, and Design &amp; Technology.
+          </p>
+        </div>
       </div>
-      <div class="contact-item">
-        <span class="contact-item-label">Phone</span>
-        <a class="contact-item-value" href="tel:+97451280151">+974 512 80 151</a>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section id="certifications">
+      <div class="section-label">Certifications</div>
+      <h2 class="section-title reveal">Verified<br /><em>credentials</em></h2>
+      <div class="cert-grid">
+        <a
+          class="cert-card reveal reveal-delay-1"
+          href="https://navoica.pl/certificates/7b9cb19e87b64588a7005c262738ada1"
+          target="_blank"
+          rel="noopener"
+        >
+          <div class="cert-issuer">NAVOICA / Vizja University</div>
+          <div class="cert-name">Website Development</div>
+          <div class="cert-date">Jan. 2026</div>
+          <div class="cert-verify">↗ Verify certificate</div>
+        </a>
+        <a
+          class="cert-card reveal reveal-delay-2"
+          href="https://navoica.pl/certificates/1e96020da4a54d798e74edb3d6229809"
+          target="_blank"
+          rel="noopener"
+        >
+          <div class="cert-issuer">NAVOICA / Vizja University</div>
+          <div class="cert-name">Academic Skills</div>
+          <div class="cert-date">Jan. 2026</div>
+          <div class="cert-verify">↗ Verify certificate</div>
+        </a>
+        <a
+          class="cert-card reveal reveal-delay-3"
+          href="https://drive.google.com/file/d/10Gtjleph2bSB00pUJ9YqJuNJ_D1sY4UL/view?usp=sharing"
+          target="_blank"
+          rel="noopener"
+        >
+          <div class="cert-issuer">British Council — IELTS Academic</div>
+          <div class="cert-name">
+            English Proficiency<br />Band 6.0 (CEFR B2)
+          </div>
+          <div class="cert-date">Aug. 2020 · Doha, Qatar</div>
+          <div class="cert-verify">↗ View certificate</div>
+        </a>
       </div>
-      <div class="contact-item">
-        <span class="contact-item-label">Location</span>
-        <span class="contact-item-value">Qatar, Doha, Al Wukair</span>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="contact-layout">
+        <div>
+          <div class="section-label">Get In Touch</div>
+          <h2 class="contact-big reveal">
+            Let's build<br />something<br /><em>great</em>
+          </h2>
+          <p
+            class="reveal"
+            style="
+              color: var(--muted);
+              font-size: 0.9rem;
+              line-height: 1.7;
+              max-width: 380px;
+            "
+          >
+            I'm actively seeking UI/UX internship opportunities. If you're
+            looking for a detail-oriented designer who can research, wireframe,
+            prototype, and iterate — let's connect.
+          </p>
+        </div>
+        <div class="contact-items reveal">
+          <div class="contact-item">
+            <span class="contact-item-label">Email</span>
+            <a class="contact-item-value" href="mailto:Otujoseph327@yahoo.com"
+              >Otujoseph327@yahoo.com</a
+            >
+          </div>
+          <div class="contact-item">
+            <span class="contact-item-label">Phone</span>
+            <a class="contact-item-value" href="tel:+97451280151"
+              >+974 512 80 151</a
+            >
+          </div>
+          <div class="contact-item">
+            <span class="contact-item-label">Location</span>
+            <span class="contact-item-value">Qatar, Doha, Al Wukair</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-item-label">GitHub</span>
+            <a
+              class="contact-item-value"
+              href="https://github.com/NukeUto"
+              target="_blank"
+              >github.com/NukeUto</a
+            >
+          </div>
+          <div class="contact-item" style="border: none">
+            <span class="contact-item-label">Figma</span>
+            <span class="contact-item-value"
+              >3 projects available on Figma</span
+            >
+          </div>
+        </div>
       </div>
-      <div class="contact-item">
-        <span class="contact-item-label">GitHub</span>
-        <a class="contact-item-value" href="https://github.com/NukeUto" target="_blank">github.com/NukeUto</a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-copy">
+        © 2025 Otu-Ekong Effiong. Built for internship applications.
       </div>
-      <div class="contact-item" style="border:none;">
-        <span class="contact-item-label">Figma</span>
-        <span class="contact-item-value">3 projects available on Figma</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-copy">© 2025 Otu-Ekong Effiong. Built for internship applications.</div>
-  <a class="footer-back" href="#home">Back to top ↑</a>
-</footer>
-
-<script>
-// Cursor
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-function animCursor() {
-  cursor.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
-  rx += (mx - rx) * 0.12;
-  ry += (my - ry) * 0.12;
-  ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
-  requestAnimationFrame(animCursor);
-}
-animCursor();
-
-// Nav scroll
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 50);
-});
-
-// Intersection observer reveals
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.reveal, .timeline-item').forEach(el => observer.observe(el));
-</script>
-</body>
+      <a class="footer-back" href="#home">Back to top ↑</a>
+    </footer>
+    <script src="script.js"></script>
+  </body>
 </html>
